@@ -6,9 +6,18 @@
 
 package Vistas;
 
+import BaseDeDatos.gestorBD;
+import Configuracion.ConfiguracionPropiedades;
+import Control.ControlUsuarios;
 import General.Utilidades;
+import General.datosUsuario;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -16,11 +25,25 @@ import java.awt.event.KeyEvent;
  */
 public class VistaInicioSesion extends javax.swing.JFrame {
     VistaPrincipall vp;
+    private final char MASCARA_CONTRASENIA = '●';
+    private gestorBD gbd;
+    boolean estadoContrasenia = false;
+    private ArrayList<String[]> usuarios;
+    ControlUsuarios usuario; 
+    private int indice;
     /**
      * Creates new form VistaInicioSesion
      */
     public VistaInicioSesion() {
+        
         initComponents();
+        this.setLocationRelativeTo(null);
+        this.setExtendedState(MAXIMIZED_BOTH);
+        usuario = new ControlUsuarios();
+        gbd = new gestorBD();
+        usuarios = new ArrayList<>();
+        vp = new VistaPrincipall();
+        vp.setVisible(false);
     }
 
     /**
@@ -49,6 +72,11 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new java.awt.GridBagLayout());
@@ -65,7 +93,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 
         txtusuario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtusuario.setForeground(new java.awt.Color(22, 108, 151));
-        txtusuario.setText("rsrd22");
+        txtusuario.setText("rsrd");
         txtusuario.setBorder(null);
         txtusuario.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -175,11 +203,11 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btniniciarsesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 154, Short.MAX_VALUE)
+            .addComponent(btniniciarsesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btniniciarsesion, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+            .addComponent(btniniciarsesion, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
         );
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -283,19 +311,19 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     private void txtusuarioFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_txtusuarioFocusLost
         int bandera = 0;
         if (!txtusuario.getText().equals("")) {
-//            for (int i = 0; i < usuarios.size(); i++) {
-//                if (usuarios.get(i)[1].toUpperCase().equals(txtusuario.getText().toUpperCase())) {
-//                    if (usuarios.get(i)[3].equals("Inactivo".toUpperCase())) {
-//                        bandera = 2;
-//                        indice = i;
-//                        break;
-//                    } else {
-//                        bandera = 1;
-//                        indice = i;
-//                        break;
-//                    }
-//                }
-//            }
+            for (int i = 0; i < usuarios.size(); i++) {
+                if (usuarios.get(i)[1].toUpperCase().equals(txtusuario.getText().toUpperCase())) {
+                    if (usuarios.get(i)[3].equals("Inactivo".toUpperCase())) {
+                        bandera = 2;
+                        indice = i;
+                        break;
+                    } else {
+                        bandera = 1;
+                        indice = i;
+                        break;
+                    }
+                }
+            }
             if (bandera == 0) {
                 lblmensaje.setForeground(Color.red);
                 lblmensaje.setText("<html><p align='center' color='#E67E22'>El usuario no existe.</p></html>");
@@ -344,6 +372,10 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         //new VistaRecuperarContrasenia(this).setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        getUsuario();
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -374,7 +406,20 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaInicioSesion().setVisible(true);
+                try {
+                    UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+                    ConfiguracionPropiedades.cargarConfiguracion();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(VistaInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    Logger.getLogger(VistaInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    Logger.getLogger(VistaInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (UnsupportedLookAndFeelException ex) {
+                    Logger.getLogger(VistaInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                VistaInicioSesion vistaInicioSesion = new VistaInicioSesion();
+                vistaInicioSesion.setVisible(true);
             }
         });
     }
@@ -397,7 +442,35 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     public javax.swing.JTextField txtusuario;
     // End of variables declaration//GEN-END:variables
 
+    public void getUsuario() {
+        //<editor-fold defaultstate="collapsed" desc="comment">
+        System.out.println("getUsuario");
+        //ID, USUARIO, CLAVE, ESTADO, CLAVE_DINAMICA
+        usuarios = gbd.SELECT("SELECT id, usuario, clave, estado, clave_dinamica FROM usuarios");
+        System.out.println("usuarios--->"+usuarios.size());
+        //</editor-fold>
+    }
+    
     private void Iniciarsesion() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (!txtcontrasena.getText().equals("")) {
+            String clve = gbd.getClaveEncryptada(txtusuario.getText().toUpperCase(), txtcontrasena.getText());
+            System.out.println("clve-->" + clve);
+            if (!usuarios.get(indice)[2].equals(clve)) {
+                lblmensaje.setForeground(Color.red);
+                lblmensaje.setText("<html><p color='#E67E22'>La contraseña es incorrecta.</p></html>");
+                txtcontrasena.setText("");
+                txtcontrasena.requestFocusInWindow();
+            } else {
+                lblmensaje.setText("");
+                //            control.getUsuarios(usuarios.get(indice)[0]);---
+//                vprin.control = usuario.getUsuarios(usuarios.get(indice)[0]);  
+                datosUsuario.datos = usuario.getUsuarios(usuarios.get(indice)[0]); 
+//                vprin.passdin = usuarios.get(indice)[4]; 
+                this.dispose();
+                vp.setVisible(true);
+                //vprin.IniciarComponentes();
+                
+            }
+        }
     }
 }
