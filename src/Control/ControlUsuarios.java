@@ -22,8 +22,9 @@ public class ControlUsuarios {
     }
     
     //<editor-fold defaultstate="collapsed" desc="DATOS DE USUARIO">
-        public List<Map<String, String>> getUsuarios(String idUsuario) {
+    public List<Map<String, String>> getUsuarios(String idUsuario) {
         try{
+            System.out.println("**************getUsuarios**************");
             String consulta = "SELECT us.id as ID_USUARIO, us.usuario as USUARIO, us.clave as CLAVE, IFNULL(empl.identificacion, '') IDENTIFICACION, IFNULL(empl.tipo_identificacion, '') TIDENTIFICACION,\n" +
                                 "empl.primer_nombre AS PN, IFNULL(empl.segundo_nombre, '') SN, empl.primer_apellido AS PA, IFNULL(empl.segundo_apellido, '') SA,\n" +
                                 "'' AS FNAC, '' AS SEXO, empl.correo AS CORREO, '' AS TELEFONOS, \n" +
@@ -61,6 +62,11 @@ public class ControlUsuarios {
                         "LEFT JOIN propietario prop ON prop.id = perp.id_propietario*/\n" +
                         "WHERE us.id = '1'";
             
+            
+            consulta = "SELECT us.id as IDUSUARIO, us.usuario as USUARIO, perf.id as IDPERFIL, perf.descripcion as PERFIL\n" +
+                        "FROM usuarios us \n" +
+                        "INNER JOIN perfiles perf on perf.id = us.id_perfil\n" +
+                        "WHERE US.ID = '"+idUsuario+"'";
             
             
             List<Map<String, String>> lista = gbd.ListSQL(consulta);

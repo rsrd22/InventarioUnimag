@@ -44,6 +44,10 @@ public class gestorBD {
         usuario = baseDeDatos.USER;
         host = baseDeDatos.HOST;
         contrasena = baseDeDatos.PASSWORD; 
+//        System.out.println("BD--"+BD);
+//        System.out.println("usuario--"+usuario);
+//        System.out.println("host--"+host);
+//        System.out.println("contrasena--"+contrasena);
     }
     
     private boolean Conectar() {

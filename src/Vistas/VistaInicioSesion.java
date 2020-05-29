@@ -24,7 +24,7 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author MERRY
  */
 public class VistaInicioSesion extends javax.swing.JFrame {
-    VistaPrincipall vp;
+    VistaInventario vp;
     private final char MASCARA_CONTRASENIA = '●';
     private gestorBD gbd;
     boolean estadoContrasenia = false;
@@ -35,14 +35,14 @@ public class VistaInicioSesion extends javax.swing.JFrame {
      * Creates new form VistaInicioSesion
      */
     public VistaInicioSesion() {
-        
         initComponents();
+        System.out.println("INICIO DE SESION");
         this.setLocationRelativeTo(null);
         this.setExtendedState(MAXIMIZED_BOTH);
         usuario = new ControlUsuarios();
         gbd = new gestorBD();
         usuarios = new ArrayList<>();
-        vp = new VistaPrincipall();
+        vp = new VistaInventario();
         vp.setVisible(false);
     }
 
@@ -70,6 +70,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -203,7 +204,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btniniciarsesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 136, Short.MAX_VALUE)
+            .addComponent(btniniciarsesion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -289,6 +290,13 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(6, 114, 0, 0);
         jPanel1.add(jLabel6, gridBagConstraints);
+
+        jButton1.setText("jButton1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 5;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        jPanel1.add(jButton1, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -385,24 +393,6 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaInicioSesion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -418,6 +408,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 } catch (UnsupportedLookAndFeelException ex) {
                     Logger.getLogger(VistaInicioSesion.class.getName()).log(Level.SEVERE, null, ex);
                 }
+                System.out.println("**********run vistaInicioSesion*************");
                 VistaInicioSesion vistaInicioSesion = new VistaInicioSesion();
                 vistaInicioSesion.setVisible(true);
             }
@@ -427,6 +418,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btniniciarsesion;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -467,6 +459,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
                 datosUsuario.datos = usuario.getUsuarios(usuarios.get(indice)[0]); 
 //                vprin.passdin = usuarios.get(indice)[4]; 
                 this.dispose();
+                
                 vp.setVisible(true);
                 //vprin.IniciarComponentes();
                 

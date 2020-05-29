@@ -9,6 +9,8 @@ package General;
 import java.awt.Color;
 import java.util.ArrayList;
 import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -177,4 +179,31 @@ public class Utilidades {
         return dato;
     }
 
+    public static void LimpiarTabla(JTable tabla) {
+        int tam = tabla.getRowCount();
+        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+        for (int i = 0; i < tam; i++) {
+            model.removeRow(0);
+        }
+        tabla.setModel(model);
+    }
+    
+    public static void agregarFilaTabla(DefaultTableModel modelotbl, Object[] fila) {
+        modelotbl.addRow(fila);
+        
+    }
+    
+    public static String ValorNULL(String valor) {
+        if (valor == null) {
+            valor = "NULL";
+        } else if (valor.trim().equals("")) {
+            valor = "NULL";
+        } else {
+            if (!valor.equalsIgnoreCase("now()")) {
+                valor = "'" + valor.trim() + "'";
+            }
+        }
+        return valor;
+    }
+    
 }

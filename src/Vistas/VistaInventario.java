@@ -6,21 +6,100 @@
 
 package Vistas;
 
+import Control.ControlInventario;
 import General.Utilidades;
+import Modelo.ModeloInventario;
+import Tablas.TablaRender;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.util.ArrayList;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 
 /**
  *
  * @author MERRY
  */
-public class VistaPrincipall extends javax.swing.JFrame {
-
+public class VistaInventario extends javax.swing.JFrame {
+    public String[] EncabezadoTblInventario; 
+    public DefaultTableModel modeloTblInventario;
+    private ControlInventario controlInventario;
+    private ArrayList<ModeloInventario>  ListamodeloInventario;
+    VistaEntradas ve;
+    VistaSalidas vs;
+    
     /**
      * Creates new form VistaPrincipall
      */
-    public VistaPrincipall() {
+    public VistaInventario() {
         initComponents();
+        
+        EncabezadoTblInventario = new String[]{
+            "No","Codigo", "Descripción", "Entradas", "Salidas", "Stock", "Acción"
+        };
+        
+        
+        InicializarTblInventario();
+        
     }
 
+    public void InicializarTblInventario() {
+        tblInventario.setDefaultRenderer(Object.class, new TablaRender());
+        
+        modeloTblInventario = new DefaultTableModel(EncabezadoTblInventario, 0) {
+            Class[] types = new Class[]{
+                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,
+                java.lang.Object.class,java.lang.Object.class,java.lang.Object.class,java.lang.Object.class
+            };
+
+            public Class getColumnClass(int col) {
+                return types[col];
+            }
+
+            public boolean isCellEditable(int row, int col) {
+                return false;
+            }
+        };
+
+        tblInventario.setModel(modeloTblInventario);
+
+        tblInventario.getColumnModel().getColumn(0).setPreferredWidth(30);
+        tblInventario.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tblInventario.getColumnModel().getColumn(2).setPreferredWidth(350);
+        tblInventario.getColumnModel().getColumn(3).setPreferredWidth(80);
+        tblInventario.getColumnModel().getColumn(4).setPreferredWidth(80);
+        tblInventario.getColumnModel().getColumn(5).setPreferredWidth(80);
+        tblInventario.getColumnModel().getColumn(6).setPreferredWidth(110);
+        
+        tblInventario.getTableHeader().setReorderingAllowed(false);
+
+        for (int i = 0; i < modeloTblInventario.getColumnCount(); i++) {
+            tblInventario.getColumnModel().getColumn(i).setResizable(false);
+            DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+            tcr.setFont(new Font("Tahoma", 0, 12));
+            
+//            if(i == 3 ){
+//                tcr.setHorizontalAlignment(SwingConstants.RIGHT);
+//               
+//            }else{
+                tcr.setHorizontalAlignment(SwingConstants.CENTER);
+                
+//            }
+            tcr.setForeground(new Color(22, 108, 151));
+            tblInventario.getColumnModel().getColumn(i).setCellRenderer(tcr);
+            
+        }
+        JTableHeader header = tblInventario.getTableHeader();
+
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setHorizontalAlignment(JLabel.CENTER);
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setPreferredSize(new Dimension(0, 35));
+        ((DefaultTableCellRenderer) header.getDefaultRenderer()).setVerticalAlignment(JLabel.CENTER);
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -38,17 +117,26 @@ public class VistaPrincipall extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblInventario = new javax.swing.JTable();
         jSeparator2 = new javax.swing.JSeparator();
         pnlEntrada = new javax.swing.JPanel();
         btnEntrada = new javax.swing.JButton();
         pnlSalida = new javax.swing.JPanel();
         btnSalida = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel1.setMinimumSize(new java.awt.Dimension(817, 521));
+        jPanel1.setPreferredSize(new java.awt.Dimension(1068, 905));
         jPanel1.setLayout(new java.awt.GridBagLayout());
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -124,7 +212,7 @@ public class VistaPrincipall extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(21, 23, 0, 0);
         jPanel1.add(jLabel7, gridBagConstraints);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblInventario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -135,11 +223,11 @@ public class VistaPrincipall extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblInventario);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 12;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.ipadx = 40;
@@ -250,6 +338,32 @@ public class VistaPrincipall extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(30, 10, 0, 0);
         jPanel1.add(pnlSalida, gridBagConstraints);
 
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(22, 108, 151));
+        jLabel1.setText("Filtro");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 2;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(20, 41, 0, 0);
+        jPanel1.add(jLabel1, gridBagConstraints);
+
+        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jTextField1.setForeground(new java.awt.Color(22, 108, 151));
+        jTextField1.setPreferredSize(new java.awt.Dimension(59, 25));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridwidth = 5;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(15, 10, 0, 0);
+        jPanel1.add(jTextField1, gridBagConstraints);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -258,7 +372,7 @@ public class VistaPrincipall extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
         );
 
         pack();
@@ -273,7 +387,9 @@ public class VistaPrincipall extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEntradaMouseExited
 
     private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
-        System.out.println("METODO ENTRADA");
+        this.dispose();
+        ve = new VistaEntradas();
+        ve.setVisible(true);
     }//GEN-LAST:event_btnEntradaActionPerformed
 
     private void btnSalidaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalidaMouseEntered
@@ -285,8 +401,15 @@ public class VistaPrincipall extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalidaMouseExited
 
     private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
-        System.out.println("METODO SALIDA");
+        this.dispose();
+        vs = new VistaSalidas();
+        vs.setVisible(true);
     }//GEN-LAST:event_btnSalidaActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        controlInventario = new ControlInventario();
+        CargarInventario();
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -305,20 +428,20 @@ public class VistaPrincipall extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VistaPrincipall.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VistaPrincipall.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VistaPrincipall.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VistaPrincipall.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(VistaInventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VistaPrincipall().setVisible(true);
+                new VistaPrincipal().setVisible(true);
             }
         });
     }
@@ -327,6 +450,7 @@ public class VistaPrincipall extends javax.swing.JFrame {
     private javax.swing.JButton btnEntrada;
     private javax.swing.JButton btnSalida;
     private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -334,8 +458,37 @@ public class VistaPrincipall extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel pnlEntrada;
     private javax.swing.JPanel pnlSalida;
+    private javax.swing.JTable tblInventario;
     // End of variables declaration//GEN-END:variables
+
+    public void CargarInventario(){
+        Utilidades.LimpiarTabla(tblInventario);
+        ListamodeloInventario = (ArrayList<ModeloInventario>) controlInventario.ObtenerDatos();
+        if(ListamodeloInventario.size()>0){
+            System.out.println("");
+            for(int i =0; i < ListamodeloInventario.size(); i++){
+                Utilidades.agregarFilaTabla(modeloTblInventario, 
+                        new Object[]{
+                            tblInventario.getRowCount()+1,
+                            ListamodeloInventario.get(i).getCodigo_elemento(),
+                            ListamodeloInventario.get(i).getDescripcion_elemento(),
+                            ListamodeloInventario.get(i).getEntradas(),
+                            ListamodeloInventario.get(i).getSalidas(),
+                            ListamodeloInventario.get(i).getStock(),
+                            "Agregar Entrada"
+                        });
+            }
+        }else{
+            
+            Utilidades.agregarFilaTabla(modeloTblInventario, 
+                        new Object[]{"","",
+                            "No se encontraron registros"
+                        });
+        }
+    }
+    
+    
 }

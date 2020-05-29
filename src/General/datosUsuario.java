@@ -18,17 +18,19 @@ public class datosUsuario {
     /**
      * datos[0]=ID USUARIO<BR>
      * datos[1]=NOMBRE DE USUARIO<BR>
-     * datos[2]=NUMERO DE ID<BR>
-     * datos[3]=TIPO DE ID<BR>
-     * datos[4]=PRIMER NOMBRE<BR>
-     * datos[5]=SEGUNDO NOMBRE<BR>
-     * datos[6]=PRIMER APELLIDO<BR>
-     * datos[7]=SEGUNDO APELLIDO<BR>
-     * datos[8]=FECHA DE NACIMIENTO<BR>
-     * datos[9]=SEXO<BR>
-     * datos[10]=EMAIL<BR>
-     * datos[11]=TELEFONO<BR>
-     * datos[12]=CELULAR<BR>
+     * datos[2]=ID PERFIL<BR>
+     * datos[3]=PERFIL<BR>
+     * datos[4]=NUMERO DE ID<BR>
+     * datos[5]=TIPO DE ID<BR>
+     * datos[6]=PRIMER NOMBRE<BR>
+     * datos[7]=SEGUNDO NOMBRE<BR>
+     * datos[8]=PRIMER APELLIDO<BR>
+     * datos[9]=SEGUNDO APELLIDO<BR>
+     * datos[10]=FECHA DE NACIMIENTO<BR>
+     * datos[11]=SEXO<BR>
+     * datos[12]=EMAIL<BR>
+     * datos[13]=TELEFONO<BR>
+     * datos[14]=CELULAR<BR>
      _____________________________
      * datos[13]=ID PERMISOS<BR>
      * datos[14]=ID MODULO(0,1,2,3)<BR>
