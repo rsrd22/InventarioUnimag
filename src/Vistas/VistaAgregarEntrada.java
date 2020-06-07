@@ -38,22 +38,25 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
     public ControlInventario controlInventario;
     public ArrayList<ModeloElemento>  ListamodeloElemento;
     public VistaEntradas ve;
+    public VistaInventario vi;
     /**
      * Creates new form VistaAgregarEntrada
      */
     public VistaAgregarEntrada() {
         initComponents();
+        this.setLocationRelativeTo(null);
         controlElemento = new ControlElemento();
         controlEntrada = new ControlEntrada();
         controlInventario = new ControlInventario();
         LimpiarFormulario();
         ListarElementos();
-        
     }
 
     VistaAgregarEntrada(VistaEntradas ve) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.ve = ve;
+        lblTitulo.setText("AGREGAR ENTRADA");
         controlElemento = new ControlElemento();
         controlEntrada = new ControlEntrada();
         controlInventario = new ControlInventario();
@@ -63,8 +66,9 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
     
     VistaAgregarEntrada(VistaEntradas ve, ModeloEntrada modelo) throws ParseException {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.ve = ve;
-        
+        lblTitulo.setText("ACTUALIZAR ENTRADA");
         controlElemento = new ControlElemento();
         controlEntrada = new ControlEntrada();
         controlInventario = new ControlInventario();
@@ -72,6 +76,25 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         ListarElementos();
         this.modeloEntrada = modelo;
         LlenarFormulario(); 
+        InhabilitarElementos();
+        
+    }
+    VistaAgregarEntrada(VistaInventario vi, Map<String, String> datos) throws ParseException {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        this.vi = vi;
+        lblTitulo.setText("AGREGAR ENTRADA");
+        controlElemento = new ControlElemento();
+        controlEntrada = new ControlEntrada();
+        controlInventario = new ControlInventario();
+        LimpiarFormulario();
+        ListarElementos();
+        modeloEntrada.setId_elemento(datos.get("ID"));
+        modeloEntrada.setCodigo_elemento(datos.get("CODIGO"));
+        modeloEntrada.setDescripcion_elemento(datos.get("DESCRIPCION"));
+        txtCodigo.setText(""+modeloEntrada.getCodigo_elemento());
+        txtDescripcion.setText(""+modeloEntrada.getDescripcion_elemento());
+        InsertElemento = 1;
         InhabilitarElementos();
         
     }
@@ -86,8 +109,8 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
-        jPanel1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
+        pnlContenedor = new javax.swing.JPanel();
+        lblTitulo = new javax.swing.JLabel();
         pnlElemento = new javax.swing.JPanel();
         txtDescripcion = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -132,15 +155,20 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosed(java.awt.event.WindowEvent evt) {
+                formWindowClosed(evt);
+            }
+        });
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        pnlContenedor.setBackground(new java.awt.Color(255, 255, 255));
+        pnlContenedor.setLayout(new java.awt.GridBagLayout());
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(22, 108, 151));
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Agregar Entrada");
-        jLabel7.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        lblTitulo.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(22, 108, 151));
+        lblTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitulo.setText("Agregar Entrada");
+        lblTitulo.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
@@ -148,7 +176,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 433;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(11, 10, 0, 22);
-        jPanel1.add(jLabel7, gridBagConstraints);
+        pnlContenedor.add(lblTitulo, gridBagConstraints);
 
         pnlElemento.setBackground(new java.awt.Color(255, 255, 255));
         pnlElemento.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Elemento", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 14), new java.awt.Color(22, 108, 151))); // NOI18N
@@ -278,8 +306,8 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipadx = 10;
         gridBagConstraints.ipady = 8;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(12, 40, 0, 22);
-        jPanel1.add(pnlElemento, gridBagConstraints);
+        gridBagConstraints.insets = new java.awt.Insets(12, 30, 0, 22);
+        pnlContenedor.add(pnlElemento, gridBagConstraints);
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(22, 108, 151));
@@ -289,7 +317,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 50, 0, 0);
-        jPanel1.add(jLabel3, gridBagConstraints);
+        pnlContenedor.add(jLabel3, gridBagConstraints);
 
         txtLote.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtLote.setForeground(new java.awt.Color(22, 108, 151));
@@ -314,7 +342,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 50, 0, 0);
-        jPanel1.add(txtLote, gridBagConstraints);
+        pnlContenedor.add(txtLote, gridBagConstraints);
 
         jSeparator4.setForeground(new java.awt.Color(22, 108, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -326,7 +354,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
-        jPanel1.add(jSeparator4, gridBagConstraints);
+        pnlContenedor.add(jSeparator4, gridBagConstraints);
 
         txtConcentracion.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtConcentracion.setForeground(new java.awt.Color(22, 108, 151));
@@ -351,7 +379,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 71, 0, 0);
-        jPanel1.add(txtConcentracion, gridBagConstraints);
+        pnlContenedor.add(txtConcentracion, gridBagConstraints);
 
         jSeparator5.setForeground(new java.awt.Color(22, 108, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -363,7 +391,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 71, 0, 0);
-        jPanel1.add(jSeparator5, gridBagConstraints);
+        pnlContenedor.add(jSeparator5, gridBagConstraints);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(22, 108, 151));
@@ -374,7 +402,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 71, 0, 0);
-        jPanel1.add(jLabel4, gridBagConstraints);
+        pnlContenedor.add(jLabel4, gridBagConstraints);
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(22, 108, 151));
@@ -385,7 +413,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(9, 50, 0, 0);
-        jPanel1.add(jLabel5, gridBagConstraints);
+        pnlContenedor.add(jLabel5, gridBagConstraints);
 
         txtMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtMarca.setForeground(new java.awt.Color(22, 108, 151));
@@ -410,7 +438,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 50, 0, 0);
-        jPanel1.add(txtMarca, gridBagConstraints);
+        pnlContenedor.add(txtMarca, gridBagConstraints);
 
         jSeparator6.setForeground(new java.awt.Color(22, 108, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -422,7 +450,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
-        jPanel1.add(jSeparator6, gridBagConstraints);
+        pnlContenedor.add(jSeparator6, gridBagConstraints);
 
         txtPresentacionComercial.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtPresentacionComercial.setForeground(new java.awt.Color(22, 108, 151));
@@ -447,7 +475,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 71, 0, 0);
-        jPanel1.add(txtPresentacionComercial, gridBagConstraints);
+        pnlContenedor.add(txtPresentacionComercial, gridBagConstraints);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(22, 108, 151));
@@ -458,7 +486,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(9, 71, 0, 0);
-        jPanel1.add(jLabel6, gridBagConstraints);
+        pnlContenedor.add(jLabel6, gridBagConstraints);
 
         jSeparator7.setForeground(new java.awt.Color(22, 108, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -470,7 +498,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 71, 0, 0);
-        jPanel1.add(jSeparator7, gridBagConstraints);
+        pnlContenedor.add(jSeparator7, gridBagConstraints);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(22, 108, 151));
@@ -481,7 +509,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(9, 50, 0, 0);
-        jPanel1.add(jLabel8, gridBagConstraints);
+        pnlContenedor.add(jLabel8, gridBagConstraints);
 
         cbSemaforizacion.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbSemaforizacion.setForeground(new java.awt.Color(22, 108, 151));
@@ -495,7 +523,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 50, 0, 0);
-        jPanel1.add(cbSemaforizacion, gridBagConstraints);
+        pnlContenedor.add(cbSemaforizacion, gridBagConstraints);
 
         txtRegistroSanitario.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtRegistroSanitario.setForeground(new java.awt.Color(22, 108, 151));
@@ -520,7 +548,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 71, 0, 0);
-        jPanel1.add(txtRegistroSanitario, gridBagConstraints);
+        pnlContenedor.add(txtRegistroSanitario, gridBagConstraints);
 
         jSeparator8.setForeground(new java.awt.Color(22, 108, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -532,7 +560,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 71, 0, 0);
-        jPanel1.add(jSeparator8, gridBagConstraints);
+        pnlContenedor.add(jSeparator8, gridBagConstraints);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(22, 108, 151));
@@ -543,7 +571,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(9, 71, 0, 0);
-        jPanel1.add(jLabel9, gridBagConstraints);
+        pnlContenedor.add(jLabel9, gridBagConstraints);
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(22, 108, 151));
@@ -554,7 +582,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(9, 50, 0, 0);
-        jPanel1.add(jLabel10, gridBagConstraints);
+        pnlContenedor.add(jLabel10, gridBagConstraints);
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(22, 108, 151));
@@ -565,7 +593,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(9, 71, 0, 0);
-        jPanel1.add(jLabel11, gridBagConstraints);
+        pnlContenedor.add(jLabel11, gridBagConstraints);
 
         cbRiesgo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         cbRiesgo.setForeground(new java.awt.Color(22, 108, 151));
@@ -579,7 +607,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 50, 0, 0);
-        jPanel1.add(cbRiesgo, gridBagConstraints);
+        pnlContenedor.add(cbRiesgo, gridBagConstraints);
 
         jdFechaVencimiento.setBackground(new java.awt.Color(255, 255, 255));
         jdFechaVencimiento.setForeground(new java.awt.Color(22, 108, 151));
@@ -593,7 +621,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 71, 0, 0);
-        jPanel1.add(jdFechaVencimiento, gridBagConstraints);
+        pnlContenedor.add(jdFechaVencimiento, gridBagConstraints);
 
         jdFechaInicio.setBackground(new java.awt.Color(255, 255, 255));
         jdFechaInicio.setForeground(new java.awt.Color(22, 108, 151));
@@ -608,7 +636,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 50, 0, 0);
-        jPanel1.add(jdFechaInicio, gridBagConstraints);
+        pnlContenedor.add(jdFechaInicio, gridBagConstraints);
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(22, 108, 151));
@@ -619,7 +647,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(20, 50, 0, 0);
-        jPanel1.add(jLabel12, gridBagConstraints);
+        pnlContenedor.add(jLabel12, gridBagConstraints);
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(22, 108, 151));
@@ -629,7 +657,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridy = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(20, 71, 0, 0);
-        jPanel1.add(jLabel13, gridBagConstraints);
+        pnlContenedor.add(jLabel13, gridBagConstraints);
 
         jdFechaFinal.setBackground(new java.awt.Color(255, 255, 255));
         jdFechaFinal.setForeground(new java.awt.Color(22, 108, 151));
@@ -643,7 +671,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 71, 0, 0);
-        jPanel1.add(jdFechaFinal, gridBagConstraints);
+        pnlContenedor.add(jdFechaFinal, gridBagConstraints);
 
         jSeparator9.setForeground(new java.awt.Color(22, 108, 151));
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -655,7 +683,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 10;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(0, 50, 0, 0);
-        jPanel1.add(jSeparator9, gridBagConstraints);
+        pnlContenedor.add(jSeparator9, gridBagConstraints);
 
         txtCantidad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         txtCantidad.setForeground(new java.awt.Color(22, 108, 151));
@@ -680,7 +708,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 13;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 50, 0, 0);
-        jPanel1.add(txtCantidad, gridBagConstraints);
+        pnlContenedor.add(txtCantidad, gridBagConstraints);
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(22, 108, 151));
@@ -691,7 +719,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 50, 0, 0);
-        jPanel1.add(jLabel14, gridBagConstraints);
+        pnlContenedor.add(jLabel14, gridBagConstraints);
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(22, 108, 151));
@@ -702,7 +730,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridwidth = 3;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(10, 71, 0, 0);
-        jPanel1.add(jLabel15, gridBagConstraints);
+        pnlContenedor.add(jLabel15, gridBagConstraints);
 
         jdFechaEntrada.setBackground(new java.awt.Color(255, 255, 255));
         jdFechaEntrada.setForeground(new java.awt.Color(22, 108, 151));
@@ -716,7 +744,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.ipady = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 71, 0, 0);
-        jPanel1.add(jdFechaEntrada, gridBagConstraints);
+        pnlContenedor.add(jdFechaEntrada, gridBagConstraints);
 
         pnlLimpiar.setBackground(new java.awt.Color(22, 108, 151));
         pnlLimpiar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -761,7 +789,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridy = 18;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(19, 31, 20, 0);
-        jPanel1.add(pnlLimpiar, gridBagConstraints);
+        pnlContenedor.add(pnlLimpiar, gridBagConstraints);
 
         pnlGuardar.setBackground(new java.awt.Color(22, 108, 151));
         pnlGuardar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(59, 123, 50)));
@@ -806,17 +834,17 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         gridBagConstraints.gridy = 18;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(19, 23, 20, 0);
-        jPanel1.add(pnlGuardar, gridBagConstraints);
+        pnlContenedor.add(pnlGuardar, gridBagConstraints);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 702, Short.MAX_VALUE)
+            .addComponent(pnlContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 738, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
+            .addComponent(pnlContenedor, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
         );
 
         pack();
@@ -918,7 +946,7 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
             banBQDElementos = 1;
             //new ventanaBusquedaPaciente(1, "IDENTIFICACION:-:NOMBRE", estadoch, this);
             if (lblBsqElementos.isEnabled()) {
-                objetoBusqueda = new ModeloGestorBusqueda(jPanel1, "BQD_ELEM", 1);
+                objetoBusqueda = new ModeloGestorBusqueda(this, "BQD_ELEM", 1);
                 new VistaBusqueda(objetoBusqueda);
             }
         }
@@ -929,6 +957,10 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
             ValidarCodigoElemento(); 
         }
     }//GEN-LAST:event_txtCodigoKeyReleased
+
+    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
+        ve.banAgregar = 0;
+    }//GEN-LAST:event_formWindowClosed
 
     /**
      * @param args the command line arguments
@@ -982,10 +1014,8 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
@@ -999,6 +1029,8 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jdFechaInicio;
     private com.toedter.calendar.JDateChooser jdFechaVencimiento;
     private javax.swing.JLabel lblBsqElementos;
+    private javax.swing.JLabel lblTitulo;
+    public javax.swing.JPanel pnlContenedor;
     private javax.swing.JPanel pnlElemento;
     private javax.swing.JPanel pnlGuardar;
     private javax.swing.JPanel pnlLimpiar;
@@ -1139,16 +1171,24 @@ public class VistaAgregarEntrada extends javax.swing.JFrame {
         
         if(retEnt == 0){
             controlInventario.ActualizarInventario(0, idElemento, modeloEntrada.getCantidad(), InsertElemento);
-            int resp = JOptionPane.showConfirmDialog(null, "Operación Realizada con exito.\n Desea ingresar otra entrada?","Agregar entrada",JOptionPane.YES_NO_OPTION);
-            if(resp == JOptionPane.YES_OPTION){
-                ve.RespuestaAgregarEntrada();
-                LimpiarFormulario();
-                ListarElementos();
+            if(vi == null){
+                int resp = JOptionPane.showConfirmDialog(null, "Operación Realizada con exito.\n Desea ingresar otra entrada?","Agregar entrada",JOptionPane.YES_NO_OPTION);
+                if(resp == JOptionPane.YES_OPTION){
+                    ve.RespuestaAgregarEntrada();
+                    LimpiarFormulario();
+                    ListarElementos();
+                }else{
+                    LimpiarFormulario();
+                    this.dispose();
+                    ve.RespuestaAgregarEntrada();
+                    ve.requestFocus();
+                }
             }else{
-                LimpiarFormulario();
+                JOptionPane.showMessageDialog(null, "Operación Realizada con exito.");
                 this.dispose();
-                ve.RespuestaAgregarEntrada();
-                ve.requestFocus();
+                vi.RespuestaAgregarEntrada();
+                vi.requestFocus();
+                
             }
         }
     }

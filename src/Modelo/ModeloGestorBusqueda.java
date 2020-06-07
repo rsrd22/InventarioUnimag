@@ -5,6 +5,7 @@
  */
 package Modelo;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
@@ -17,7 +18,7 @@ public class ModeloGestorBusqueda {
     private String keyconsulta;
     private int opcion;
 
-    public ModeloGestorBusqueda(JPanel panelsolicitante, String keyconsulta, int opcion) {
+    public ModeloGestorBusqueda(JFrame panelsolicitante, String keyconsulta, int opcion) {
         this.panelsolicitante = panelsolicitante;
         this.keyconsulta = keyconsulta;
         this.opcion = opcion;

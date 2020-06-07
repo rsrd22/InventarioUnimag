@@ -37,7 +37,7 @@ public class VistaSalidas extends javax.swing.JFrame {
      */
     public VistaSalidas() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
         EncabezadoTblSalida = new String[]{
             "No","Codigo", "Descripción", "Lote", 
             "Cantidad", "Fecha", "Responsable", "Accion"

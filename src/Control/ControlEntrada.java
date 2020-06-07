@@ -83,8 +83,8 @@ public class ControlEntrada implements IControl{
                     "fecha_inicio, fecha_fin, cantidad, fecha_entrada, id_usuario, fecha)\n" +
                     "VALUES\n" +
                     "("+entrada.getId()+", "+entrada.getId_elemento()+", '"+entrada.getLote()+"', '"+entrada.getConcentracion()+"', '"+entrada.getMarca()+"', \n" +
-                    "'"+entrada.getPresentacion()+"', '"+entrada.getRiesgo()+"', '"+entrada.getReg_sanitario()+"','"+entrada.getSemaforizacion()+"', "+Utilidades.ValorNULL(entrada.getFecha_vencimiento())+", \n" +
-                    ""+Utilidades.ValorNULL(entrada.getFecha_inicio())+", "+Utilidades.ValorNULL(entrada.getFecha_fin())+", "+entrada.getCantidad()+", "+Utilidades.ValorNULL(entrada.getFecha_entrada())+", "+entrada.getId_usuario()+", "+entrada.getFecha()+");"
+                    "'"+entrada.getPresentacion()+"', '"+entrada.getRiesgo()+"', '"+entrada.getReg_sanitario()+"','"+entrada.getSemaforizacion()+"', "+Utilidades.ValorNULLFECHA(entrada.getFecha_vencimiento())+", \n" +
+                    ""+Utilidades.ValorNULLFECHA(entrada.getFecha_inicio())+", "+Utilidades.ValorNULLFECHA(entrada.getFecha_fin())+", "+entrada.getCantidad()+", "+Utilidades.ValorNULLFECHA(entrada.getFecha_entrada())+", "+entrada.getId_usuario()+", "+entrada.getFecha()+");"
         //</editor-fold>
         );
 
@@ -110,22 +110,22 @@ public class ControlEntrada implements IControl{
 
         consultas.add(
             //<editor-fold defaultstate="collapsed" desc="UPDATE SALIDAS">
-                "UPDATE `entradas`\n" +
-                    "SET `lote` = '"+entrada.getLote()+"',\n" +
-                    "  `concentracion` = '"+entrada.getConcentracion()+"',\n" +
-                    "  `marca` = '"+entrada.getMarca()+"',\n" +
-                    "  `presentacion_comercial` = '"+entrada.getPresentacion()+"',\n" +
-                    "  `riesgo` = '"+entrada.getRiesgo()+"',\n" +
-                    "  `registro_sanitario` = '"+entrada.getMarca()+"',\n" +
-                    "  `semaforizacion` = '"+entrada.getSemaforizacion()+"',\n" +
-                    "  `fecha_vencimiento` = "+Utilidades.ValorNULL(entrada.getFecha_vencimiento())+",\n" +
-                    "  `fecha_inicio` = "+Utilidades.ValorNULL(entrada.getFecha_inicio())+",\n" +
-                    "  `fecha_fin` = "+Utilidades.ValorNULL(entrada.getFecha_fin())+",\n" +
-                    "  `cantidad` = "+entrada.getCantidad()+",\n" +
-                    "  `fecha_entrada` = "+Utilidades.ValorNULL(entrada.getFecha_entrada())+",\n" +
-                    "  `id_usuario` = "+entrada.getId_usuario()+",\n" +
-                    "  `fecha` = "+entrada.getConcentracion()+"\n" +
-                    "WHERE `id` = "+entrada.getId()+";"
+                "UPDATE entradas\n" +
+                    "SET lote = '"+entrada.getLote()+"',\n" +
+                    "  concentracion = '"+entrada.getConcentracion()+"',\n" +
+                    "  marca = '"+entrada.getMarca()+"',\n" +
+                    "  presentacion_comercial = '"+entrada.getPresentacion()+"',\n" +
+                    "  riesgo = '"+entrada.getRiesgo()+"',\n" +
+                    "  registro_sanitario = '"+entrada.getMarca()+"',\n" +
+                    "  semaforizacion = '"+entrada.getSemaforizacion()+"',\n" +
+                    "  fecha_vencimiento = "+Utilidades.ValorNULLFECHA(entrada.getFecha_vencimiento())+",\n" +
+                    "  fecha_inicio = "+Utilidades.ValorNULLFECHA(entrada.getFecha_inicio())+",\n" +
+                    "  fecha_fin = "+Utilidades.ValorNULLFECHA(entrada.getFecha_fin())+",\n" +
+                    "  cantidad = "+entrada.getCantidad()+",\n" +
+                    "  fecha_entrada = "+Utilidades.ValorNULLFECHA(entrada.getFecha_entrada())+"\n" +
+//                    "  `id_usuario` = "+entrada.getId_usuario()+",\n" +
+//                    "  `fecha` = "+entrada.getFecha()+"\n" +
+                    "WHERE id = "+entrada.getId()+";"
             //</editor-fold>
              );
 

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
@@ -69,7 +70,7 @@ public class VistaBusqueda extends javax.swing.JFrame {
     }
 
     private void LlenarListaDatos() {
-
+        System.out.println("LlenarListaDatos-->"+objeto.getKeyconsulta());
         SQL = consultas.get(objeto.getKeyconsulta());
         System.out.println("sql--->" + SQL);
         list_consul = gsql.ListSQL(SQL);

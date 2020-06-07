@@ -7,13 +7,19 @@
 package Vistas;
 
 import Control.ControlInventario;
+import General.Consultas;
 import General.Utilidades;
 import Modelo.ModeloInventario;
 import Tablas.TablaRender;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -31,13 +37,16 @@ public class VistaInventario extends javax.swing.JFrame {
     private ArrayList<ModeloInventario>  ListamodeloInventario;
     VistaEntradas ve;
     VistaSalidas vs;
+    public int banAgregar = 0;
+    public VistaAgregarEntrada vae;
     
     /**
      * Creates new form VistaPrincipall
      */
     public VistaInventario() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
+        Consultas.Agregar();
         EncabezadoTblInventario = new String[]{
             "No","Codigo", "Descripción", "Entradas", "Salidas", "Stock", "Acción"
         };
@@ -223,6 +232,11 @@ public class VistaInventario extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblInventario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblInventarioMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblInventario);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -411,6 +425,30 @@ public class VistaInventario extends javax.swing.JFrame {
         CargarInventario();
     }//GEN-LAST:event_formWindowOpened
 
+    private void tblInventarioMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblInventarioMouseReleased
+        int fila = tblInventario.getSelectedRow();
+        int cola = tblInventario.getSelectedColumn();
+        System.out.println("cola-->"+cola);
+         if(cola == 6){// Acción Modificar
+            if(banAgregar == 0){
+                try {
+                    banAgregar = 1;
+                    Map<String, String> datos = new HashMap<String, String>();
+                    datos.put("ID", ""+ListamodeloInventario.get(fila).getId_elemento());
+                    datos.put("CODIGO", ""+ListamodeloInventario.get(fila).getCodigo_elemento()); 
+                    datos.put("DESCRIPCION", ""+ListamodeloInventario.get(fila).getDescripcion_elemento());
+                    
+                    vae = new VistaAgregarEntrada(this, datos); 
+                    vae.setVisible(true);
+                } catch (ParseException ex) {
+                    Logger.getLogger(VistaEntradas.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }else{
+                vae.requestFocus();
+            }
+        }
+    }//GEN-LAST:event_tblInventarioMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -488,6 +526,10 @@ public class VistaInventario extends javax.swing.JFrame {
                             "No se encontraron registros"
                         });
         }
+    }
+
+    public void RespuestaAgregarEntrada() {
+        CargarInventario();
     }
     
     

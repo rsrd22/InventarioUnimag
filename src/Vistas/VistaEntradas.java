@@ -47,7 +47,7 @@ public class VistaEntradas extends javax.swing.JFrame {
      */
     public VistaEntradas() {
         initComponents();
-        
+        this.setLocationRelativeTo(null);
         EncabezadoTblEntradas = new String[]{
             "No","Codigo", "Descripción", "Lote", 
             "Fecha Vencimiento", "Cantidad", "Fecha Entrada", "Ver Mas","Acción"
@@ -455,6 +455,7 @@ public class VistaEntradas extends javax.swing.JFrame {
 
     private void btnAgregarEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarEntradaActionPerformed
         if(banAgregar == 0){
+            banAgregar = 1;
             vae = new VistaAgregarEntrada(this);
             vae.setVisible(true);
         }else{
@@ -466,6 +467,10 @@ public class VistaEntradas extends javax.swing.JFrame {
         if(banAgregar == 1){
             vae.dispose();
         }
+        if(banInformacion == 1){
+            vie.dispose();
+        }
+        
     }//GEN-LAST:event_formWindowClosed
 
     private void tblEntradasMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEntradasMouseReleased
@@ -483,6 +488,7 @@ public class VistaEntradas extends javax.swing.JFrame {
         } else if(cola == 8){// Acción Modificar
             if(banAgregar == 0){
                 try {
+                    banAgregar = 1;
                     System.out.println("ListamodeloEntradas.get(fila)-->"+ListamodeloEntradas.get(fila));
                     vae = new VistaAgregarEntrada(this, ListamodeloEntradas.get(fila));
                     vae.setVisible(true);
@@ -578,9 +584,6 @@ public class VistaEntradas extends javax.swing.JFrame {
         }
     }
 
-    public void RetornoBusqueda(ModeloGestorBusqueda objeto, Map<String, String> retorno) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     public void RespuestaAgregarEntrada() {
         CargarEntradas();

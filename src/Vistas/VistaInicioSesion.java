@@ -38,7 +38,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
         initComponents();
         System.out.println("INICIO DE SESION");
         this.setLocationRelativeTo(null);
-        this.setExtendedState(MAXIMIZED_BOTH);
+        
         usuario = new ControlUsuarios();
         gbd = new gestorBD();
         usuarios = new ArrayList<>();
@@ -381,6 +381,7 @@ public class VistaInicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        this.setExtendedState(MAXIMIZED_BOTH); 
         getUsuario();
     }//GEN-LAST:event_formWindowOpened
 

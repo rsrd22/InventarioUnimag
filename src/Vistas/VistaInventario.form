@@ -167,6 +167,9 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblInventarioMouseReleased"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

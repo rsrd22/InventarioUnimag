@@ -20,6 +20,7 @@ public class VistaInformacionEntrada extends javax.swing.JFrame {
      */
     public VistaInformacionEntrada(VistaEntradas vista, ModeloEntrada modelo) {
         initComponents();
+        this.setLocationRelativeTo(null);
         this.modelo = modelo;
         this.vista = vista;
         LimpiarCampos();

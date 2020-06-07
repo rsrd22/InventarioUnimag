@@ -206,4 +206,17 @@ public class Utilidades {
         return valor;
     }
     
+    public static String ValorNULLFECHA(String valor) {
+        if (valor == null) {
+            valor = "NULL";
+        } else if (valor.trim().equals("")) {
+            valor = "NULL";
+        } else {
+            if (!valor.equalsIgnoreCase("now()")) {
+                valor = "#" + valor.trim() + "#";
+            }
+        }
+        return valor;
+    }
+    
 }

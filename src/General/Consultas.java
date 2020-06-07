@@ -24,8 +24,9 @@ public class Consultas {
      * CC= ALINEACION CONTENIDO COLUMNA TABLA ("L", "C", "R")
      */
     public static void Agregar() {
-
-        consultas.put("BQD_ELEM", "SELECT Id AS  ID, descripcion AS DESCRIPCION, codigo_elemento AS CODIGO\n" +
+        consultas.clear();
+        
+        consultas.put("BQD_ELEM", "SELECT Id as ID , descripcion as DESCRIPCION, codigo_elemento AS CODIGO, id_usuario, fecha\n" +
                                     "FROM elementos\n" +
                                     "ORDER BY descripcion ASC");
 
